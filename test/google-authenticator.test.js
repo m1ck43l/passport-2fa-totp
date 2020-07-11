@@ -2,12 +2,12 @@
 
 var expect = require('chai').expect,
     base32 = require('thirty-two'),
-    GoogleAuthenticator = require('..').GoogeAuthenticator;
+    GoogleAuthenticator = require('..').GoogleAuthenticator;
     
 describe('Google Authenticator utils', function () {
     
     it('register', function () {
-        var code = GoogleAuthenticator.register('username');
+        var code = GoogleAuthenticator.register('username', 'issuer');
         
         expect(code).to.be.an('object');
         expect(code.qr).to.be.a('string');
@@ -17,7 +17,7 @@ describe('Google Authenticator utils', function () {
     });
     
     it('decodeSecret', function () {
-        var code = GoogleAuthenticator.register('username');
+        var code = GoogleAuthenticator.register('username', 'issuer');
         var decodedSecret = GoogleAuthenticator.decodeSecret(code.secret);
         var encodedSecret = base32.encode(decodedSecret).toString().replace(/=/g, ''); // Google Authenticator ignores '='
         
